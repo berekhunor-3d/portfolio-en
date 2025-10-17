@@ -1,814 +1,532 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hu">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Berek Hunor - 3D Graphics Portfolio</title>
-    <link href="https://fonts.googleapis.com/css2?family=Georama:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --primary-orange: #ff6b35;
-            --light-orange: #ff8c5a;
-            --warm-orange: #ff9f7a;
-            --cream: #f5f5dc;
-            --warm-beige: #e8d7c3;
-            --skin-tone: #f4c2a1;
-            --white: #ffffff;
-            --dark-text: #2c2c2c;
-            --shadow: rgba(255, 107, 53, 0.3);
-        }
-
-        body {
-            font-family: 'Georama', sans-serif;
-            background: linear-gradient(135deg, var(--cream) 0%, var(--warm-beige) 50%, var(--skin-tone) 100%);
-            min-height: 100vh;
-            color: var(--dark-text);
-            overflow-x: hidden;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        /* Navigation */
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-            z-index: 1000;
-            padding: 15px 0;
-        }
-
-        nav .container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--primary-orange);
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 30px;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--dark-text);
-            font-weight: 500;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .nav-links a:hover {
-            color: var(--primary-orange);
-            transform: translateY(-2px);
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: -5px;
-            left: 0;
-            background: var(--primary-orange);
-            transition: width 0.3s ease;
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        /* Hero Section */
-        .hero {
-            padding: 120px 0 80px;
-            text-align: center;
-            position: relative;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="%23ff6b35" stroke-width="0.5" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
-            opacity: 0.3;
-            z-index: -1;
-        }
-
-        .hero-content {
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border-radius: 30px;
-            padding: 60px 40px;
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            box-shadow: 0 20px 40px rgba(255, 107, 53, 0.15);
-            transform: translateY(0);
-            transition: transform 0.3s ease;
-        }
-
-        .hero-content:hover {
-            transform: translateY(-10px);
-        }
-
-        .hero h1 {
-            font-size: 4rem;
-            font-weight: 700;
-            margin-bottom: 20px;
-            background: linear-gradient(45deg, var(--primary-orange), var(--light-orange));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .hero h2 {
-            font-size: 1.8rem;
-            color: var(--dark-text);
-            margin-bottom: 30px;
-            font-weight: 400;
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            line-height: 1.8;
-            max-width: 600px;
-            margin: 0 auto 40px;
-            color: var(--dark-text);
-        }
-
-        .cta-button {
-            display: inline-block;
-            background: linear-gradient(45deg, var(--primary-orange), var(--light-orange));
-            color: white;
-            padding: 15px 40px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1.1rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.4);
-            border: none;
-            cursor: pointer;
-        }
-
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(255, 107, 53, 0.6);
-        }
-
-        /* Skills Section */
-        .skills {
-            padding: 80px 0;
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 3rem;
-            font-weight: 700;
-            margin-bottom: 60px;
-            color: var(--primary-orange);
-        }
-
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 40px;
-            margin-top: 50px;
-        }
-
-        .skill-card {
-            background: rgba(255, 255, 255, 0.25);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border-radius: 20px;
-            padding: 40px 30px;
-            text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .skill-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.6s ease;
-        }
-
-        .skill-card:hover::before {
-            left: 100%;
-        }
-
-        .skill-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(255, 107, 53, 0.2);
-        }
-
-        .skill-icon {
-            font-size: 4rem;
-            margin-bottom: 20px;
-            color: var(--primary-orange);
-        }
-
-        .skill-card h3 {
-            font-size: 1.8rem;
-            margin-bottom: 15px;
-            color: var(--dark-text);
-        }
-
-        .skill-card p {
-            color: var(--dark-text);
-            line-height: 1.6;
-        }
-
-        /* Portfolio Section */
-        .portfolio {
-            padding: 80px 0;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-        }
-
-        .media-gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 50px;
-        }
-
-        .media-item {
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border-radius: 20px;
-            overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.1);
-        }
-
-        .media-item:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 25px 50px rgba(255, 107, 53, 0.3);
-        }
-
-        .media-content {
-            width: 100%;
-            height: 400px;
-            background: linear-gradient(45deg, var(--warm-orange), var(--skin-tone));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .media-content video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 0;
-            cursor: pointer;
-        }
-
-        .media-content img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 0;
-            cursor: pointer;
-        }
-
-        .media-placeholder {
-            font-size: 2rem;
-            color: white;
-            text-align: center;
-            font-weight: 600;
-        }
-
-        .media-info {
-            padding: 25px;
-            text-align: center;
-        }
-
-        .media-info h4 {
-            color: var(--primary-orange);
-            margin-bottom: 10px;
-            font-size: 1.3rem;
-            font-weight: 600;
-        }
-
-        .media-info p {
-            color: var(--dark-text);
-            font-size: 0.95rem;
-            opacity: 0.9;
-            line-height: 1.5;
-        }
-
-        /* Contact Section */
-        .contact {
-            padding: 80px 0;
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-        }
-
-        .contact-content {
-            max-width: 600px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        .contact-info {
-            margin-top: 40px;
-        }
-
-        .social-card {
-            background: rgba(255, 255, 255, 0.25);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border-radius: 20px;
-            padding: 40px;
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            text-align: center;
-            transition: all 0.3s ease;
-        }
-
-        .social-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(255, 107, 53, 0.2);
-        }
-
-        .facebook-logo {
-            width: 60px;
-            height: 60px;
-            background: #1877f2;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 20px;
-            font-size: 2rem;
-            color: white;
-            font-weight: bold;
-        }
-
-        .social-card h3 {
-            font-size: 1.8rem;
-            margin-bottom: 15px;
-            color: var(--primary-orange);
-        }
-
-        .social-card p {
-            color: var(--dark-text);
-            line-height: 1.6;
-            margin-bottom: 25px;
-        }
-
-        /* Video Modal */
-        .modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 2000;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-        }
-
-        .modal.active {
-            display: flex;
-        }
-
-        .modal-content {
-            position: relative;
-            max-width: 90%;
-            max-height: 90%;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-        }
-
-        .modal-media {
-            width: 100%;
-            height: auto;
-            max-height: 80vh;
-            border-radius: 15px;
-            display: block;
-        }
-
-        .close-modal {
-            position: absolute;
-            top: -10px;
-            right: -10px;
-            background: var(--primary-orange);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            cursor: pointer;
-            font-size: 1.5rem;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(255, 107, 53, 0.3);
-        }
-
-        .close-modal:hover {
-            background: var(--light-orange);
-            transform: scale(1.1);
-        }
-
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .hero h2 {
-                font-size: 1.4rem;
-            }
-
-            .hero-content {
-                padding: 40px 20px;
-            }
-
-            .section-title {
-                font-size: 2rem;
-            }
-
-            .skills-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .skills-grid .skill-card {
-                min-width: auto;
-            }
-
-            .media-gallery {
-                grid-template-columns: 1fr;
-            }
-
-            .container {
-                padding: 0 15px;
-            }
-
-            .modal-content {
-                max-width: 95%;
-                max-height: 95%;
-                padding: 15px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .hero h1 {
-                font-size: 2rem;
-            }
-
-            .hero h2 {
-                font-size: 1.2rem;
-            }
-
-            .hero p {
-                font-size: 1rem;
-            }
-
-            .social-card {
-                padding: 20px;
-            }
-        }
-
-        /* Scroll animations */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-            animation: fadeInUp 0.8s ease forwards;
-        }
-
-        @keyframes fadeInUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Floating elements */
-        .floating-element {
-            position: absolute;
-            opacity: 0.1;
-            animation: float 6s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(180deg); }
-        }
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Berek Hunor – 3D grafikus portfólió: termékvizualizáció és reklámanimáció professzionális minőségben." />
+  <meta name="theme-color" content="#ff6b35" />
+  <title>Berek Hunor – 3D Graphics Portfolio</title>
+
+  <!-- SEO / Social -->
+  <meta property="og:title" content="Berek Hunor – 3D Graphics Portfolio" />
+  <meta property="og:description" content="Termékvizualizáció és reklámanimáció – prémium minőségű 3D munkák." />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="hu_HU" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Fonts: preconnect + display=swap for performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Georama:wght@300;400;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /*
+      Industrial-grade improvements:
+      - A11y: focus states, skip link, semantic roles, ARIA, prefers-reduced-motion.
+      - Performance: lazy images, reduced repaints, preconnect, clamp typography.
+      - UX: mobile nav, focus-trap dialog, keyboard nav in gallery, smooth-scroll safe.
+      - Maintainability: CSS vars, small BEM-ish naming, comments and structure.
+    */
+
+    :root {
+      --primary: #ff6b35;
+      --primary-600: #ff8c5a;
+      --primary-300: #ff9f7a;
+      --bg-cream: #f5f5dc;
+      --bg-beige: #e8d7c3;
+      --bg-skin: #f4c2a1;
+      --text: #2c2c2c;
+      --surface: #ffffff;
+      --shadow: 0 12px 30px rgba(255, 107, 53, 0.18);
+      --radius-lg: 24px;
+      --radius-xl: 32px;
+      --container: 1200px;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg-cream: #1f1b18;
+        --bg-beige: #2a2623;
+        --bg-skin: #332a24;
+        --surface: #121212;
+        --text: #efefef;
+        --shadow: 0 12px 30px rgba(0,0,0,0.45);
+      }
+    }
+
+    * { box-sizing: border-box; }
+    html:focus-within { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: 'Georama', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: var(--text);
+      background: linear-gradient(135deg, var(--bg-cream), var(--bg-beige) 50%, var(--bg-skin));
+      min-height: 100svh;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    .container { max-width: var(--container); margin-inline: auto; padding-inline: 20px; }
+
+    /* Skip link */
+    .skip-link {
+      position: absolute; inset-inline-start: 1rem; inset-block-start: 0.5rem;
+      transform: translateY(-150%);
+      background: var(--surface); color: var(--primary);
+      padding: 0.5rem 0.75rem; border-radius: 8px; box-shadow: var(--shadow);
+    }
+    .skip-link:focus { transform: translateY(0); outline: 3px solid var(--primary); }
+
+    /* Header / Nav */
+    .site-header {
+      position: sticky; top: 0; z-index: 1000;
+      background: color-mix(in srgb, var(--surface), transparent 80%);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid color-mix(in srgb, var(--surface), transparent 60%);
+    }
+    .nav {
+      display: flex; justify-content: space-between; align-items: center;
+      padding-block: 12px; gap: 16px;
+    }
+    .brand { font-size: clamp(1.25rem, 2vw, 1.75rem); font-weight: 700; color: var(--primary); }
+    .nav__links { display: flex; gap: clamp(12px, 3vw, 28px); list-style: none; margin: 0; padding: 0; }
+    .nav__link { text-decoration: none; color: inherit; position: relative; font-weight: 600; }
+    .nav__link:focus-visible, .nav__link:hover { color: var(--primary); }
+    .nav__link::after { content:""; position:absolute; left:0; bottom:-6px; height:2px; width:0; background: var(--primary); transition: width .25s; }
+    .nav__link:hover::after { width:100%; }
+
+    /* Mobile menu */
+    .nav__toggle { display: none; background: transparent; border: 0; padding: 8px; border-radius: 10px; }
+    .nav__toggle:focus-visible { outline: 3px solid var(--primary); }
+    .nav__menu { display: contents; }
+
+    @media (max-width: 768px) {
+      .nav__toggle { display: inline-flex; }
+      .nav__menu { display: none; }
+      .nav__menu[data-open="true"] {
+        display: block; position: absolute; inset-inline: 0; top: 56px;
+        background: color-mix(in srgb, var(--surface), transparent 10%);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid color-mix(in srgb, var(--surface), transparent 60%);
+      }
+      .nav__links { flex-direction: column; padding: 12px 16px; }
+    }
+
+    /* Hero */
+    .hero { padding-block: clamp(96px, 12vw, 140px) 72px; position: relative; }
+    .hero__panel {
+      border-radius: var(--radius-xl);
+      padding: clamp(28px, 4vw, 56px);
+      border: 1px solid color-mix(in srgb, var(--surface), transparent 50%);
+      background: color-mix(in srgb, var(--surface), transparent 70%);
+      backdrop-filter: blur(10px);
+      box-shadow: var(--shadow);
+    }
+    .hero__title {
+      font-size: clamp(2rem, 6vw, 4rem);
+      margin: 0 0 10px;
+      background: linear-gradient(45deg, var(--primary), var(--primary-600));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    .hero__subtitle { font-size: clamp(1.25rem, 2.6vw, 1.75rem); margin: 0 0 16px; }
+    .hero__lead { font-size: clamp(1rem, 2.2vw, 1.2rem); line-height: 1.8; max-width: 60ch; margin: 0; }
+
+    .btn {
+      display: inline-block; margin-top: 28px; border: 0; cursor: pointer;
+      padding: 14px 28px; border-radius: 999px; font-weight: 700;
+      background: linear-gradient(45deg, var(--primary), var(--primary-600));
+      color: white; text-decoration: none; box-shadow: var(--shadow);
+    }
+    .btn:focus-visible { outline: 3px solid var(--primary-300); outline-offset: 2px; }
+
+    /* Sections */
+    .section { padding-block: clamp(56px, 10vw, 96px); }
+    .section__title { text-align: center; font-size: clamp(1.75rem, 4.5vw, 3rem); color: var(--primary); margin: 0 0 28px; }
+
+    /* Skills */
+    .skills__grid {
+      display: grid; gap: 24px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      margin-top: 28px;
+    }
+    .card {
+      border-radius: 20px; padding: 28px;
+      background: color-mix(in srgb, var(--surface), transparent 70%);
+      border: 1px solid color-mix(in srgb, var(--surface), transparent 50%);
+      backdrop-filter: blur(10px); box-shadow: var(--shadow);
+      transition: transform .25s ease;
+    }
+    .card:hover { transform: translateY(-6px); }
+    .card__icon { font-size: 2.25rem; margin-bottom: 10px; color: var(--primary); }
+    .card__title { margin: 0 0 8px; font-size: 1.25rem; }
+    .card__text { margin: 0; line-height: 1.6; }
+
+    /* Portfolio */
+    .gallery {
+      display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      margin-top: 28px;
+    }
+    .media { border-radius: 18px; overflow: clip; background: color-mix(in srgb, var(--surface), transparent 70%); border: 1px solid color-mix(in srgb, var(--surface), transparent 50%); box-shadow: var(--shadow); }
+    .media__frame { inline-size: 100%; block-size: 340px; display: grid; place-items: center; position: relative; overflow: hidden; }
+    .media__frame img, .media__frame video { inline-size: 100%; block-size: 100%; object-fit: cover; display: block; }
+    .media__meta { padding: 16px; text-align: center; }
+    .media__title { margin: 0 0 6px; color: var(--primary); font-weight: 700; }
+    .media__desc { margin: 0; opacity: 0.9; font-size: 0.95rem; }
+
+    /* Contact */
+    .contact__card { text-align: center; }
+    .contact__logo {
+      inline-size: 56px; block-size: 56px; border-radius: 12px; display: grid; place-items: center; margin: 0 auto 12px; font-weight: 800; color: #fff; background: #1877f2;
+    }
+
+    /* Dialog (modal) */
+    dialog.media-dialog {
+      border: none; padding: 0; border-radius: 18px; max-inline-size: min(92vw, 1100px);
+      background: color-mix(in srgb, var(--surface), transparent 8%);
+      backdrop-filter: blur(10px); box-shadow: 0 24px 80px rgba(0,0,0,.5);
+    }
+    dialog::backdrop { background: rgba(0,0,0,.85); }
+    .media-dialog__wrap { padding: 12px; position: relative; }
+    .media-dialog__close {
+      position: absolute; inset-block-start: 6px; inset-inline-end: 6px; border: 0; border-radius: 999px;
+      inline-size: 40px; block-size: 40px; font-size: 1.25rem; cursor: pointer; color: #fff;
+      background: var(--primary); box-shadow: var(--shadow);
+    }
+    .media-dialog__content { max-block-size: calc(90svh - 48px); }
+    .media-dialog__content > img, .media-dialog__content > video { display: block; width: 100%; height: auto; border-radius: 12px; }
+
+    /* Motion preferences */
+    @media (prefers-reduced-motion: reduce) {
+      * { animation: none !important; transition: none !important; }
+      html:focus-within { scroll-behavior: auto; }
+    }
+
+    /* Focus styles */
+    :where(a, button, [tabindex="0"]) { outline-offset: 2px; }
+    :where(a, button, [tabindex="0"]):focus-visible { outline: 3px solid var(--primary); }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Berek Hunor",
+    "jobTitle": "3D Graphics Artist",
+    "sameAs": [
+      "https://www.facebook.com/hunor.berek.7/?locale=hu_HU"
+    ]
+  }
+  </script>
 </head>
 <body>
-    <nav>
-        <div class="container">
-            <div class="logo">Berek Hunor</div>
-            <ul class="nav-links">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#skills">Skills</a></li>
-                <li><a href="#portfolio">Portfolio</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </div>
-    </nav>
+  <a class="skip-link" href="#main">Ugrás a tartalomra</a>
 
-    <section id="home" class="hero">
-        <div class="container">
-            <div class="hero-content fade-in">
-                <h1>Berek Hunor</h1>
-                <h2>3D Graphics Artist</h2>
-                <p>Creative 16-year-old 3D artist specializing in product visualization and advertising animation.</p>
-            </div>
-        </div>
-    </section>
+  <header class="site-header" role="banner">
+    <div class="container nav">
+      <a href="#home" class="brand" aria-label="Kezdőlap">Berek Hunor</a>
 
-    <section id="skills" class="skills">
-        <div class="container">
-            <h2 class="section-title">Skills</h2>
-            <div class="skills-grid">
-                <div class="skill-card fade-in">
-                    <div class="skill-icon">🚗</div>
-                    <h3>Product Visualization</h3>
-                    <p>Professional product rendering for various industries. Photorealistic visualization of electronics, products, and consumer goods.</p>
-                </div>
-                <div class="skill-card fade-in">
-                    <div class="skill-icon">🎬</div>
-                    <h3>Advertising Animation</h3>
-                    <p>Creating engaging advertising animations and visual experiences. Product demos, brand videos, and marketing content animation.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+      <button class="nav__toggle" aria-expanded="false" aria-controls="primary-menu" id="menuButton" title="Menü megnyitása">
+        ☰
+      </button>
 
-    <section id="portfolio" class="portfolio">
-        <div class="container">
-            <h2 class="section-title">Portfolio</h2>
-            <div class="media-gallery">
-                <div class="media-item fade-in">
-                    <div class="media-content">
-                        <video autoplay muted loop onclick="openModal(this)">
-                            <source src="video1.mp4" type="video/mp4">
-                            <div class="media-placeholder">Nike shoe animation</div>
-                        </video>
-                    </div>
-                    <div class="media-info">
-                        <h4>Product Showcase Video</h4>
-                        <p>3D animation with visual effects (2025)</p>
-                    </div>
-                </div>
-                
-                <div class="media-item fade-in">
-                    <div class="media-content">
-                        <video autoplay muted loop onclick="openModal(this)">
-                            <source src="video2.mp4" type="video/mp4">
-                            <div class="media-placeholder">Advertising Animation</div>
-                        </video>
-                    </div>
-                    <div class="media-info">
-                        <h4>Product Showcase Video</h4>
-                        <p>Videos for social media platforms (2025)</p>
-                    </div>
-                </div>
-
-                <div class="media-item fade-in">
-                    <div class="media-content">
-                        <img src="image1.jpg" alt="Product Render" onclick="openModal(this)" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        <div class="media-placeholder" style="display: none;">Product Render #1</div>
-                    </div>
-                    <div class="media-info">
-                        <h4>Marble Texture</h4>
-                        <p>(Independent work) (2023)</p>
-                    </div>
-                </div>
-
-                <div class="media-item fade-in">
-                    <div class="media-content">
-                        <img src="image2.jpg" alt="Automotive Component" onclick="openModal(this)" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        <div class="media-placeholder" style="display: none;">Automotive Render</div>
-                    </div>
-                    <div class="media-info">
-                        <h4>Marble Texture</h4>
-                        <p>(Independent work) (2023)</p>
-                    </div>
-                </div>
-
-                <div class="media-item fade-in">
-                    <div class="media-content">
-                        <video autoplay muted loop onclick="openModal(this)">
-                            <source src="video4.mp4" type="video/mp4">
-                            <div class="media-placeholder">Advertising Animation</div>
-                        </video>
-                    </div>
-                    <div class="media-info">
-                        <h4>Product Showcase Video</h4>
-                        <p>Premium-quality animations (2025)</p>
-                    </div>
-                </div>
-
-                <div class="media-item fade-in">
-                    <div class="media-content">
-                        <img src="image4.jpg" alt="Product Composition" onclick="openModal(this)" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        <div class="media-placeholder" style="display: none;">Product Composition</div>
-                    </div>
-                    <div class="media-info">
-                        <h4>Vintage-Style Electronics</h4>
-                        <p>(Independent work) (2022)</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="contact" class="contact">
-        <div class="container">
-            <div class="contact-content">
-                <h2 class="section-title">Contact</h2>
-                <p>Have a project in mind? Feel free to reach out!</p>
-                <div class="contact-info">
-                    <div class="social-card">
-                        <div class="facebook-logo">f</div>
-                        <h3>Facebook</h3>
-                        <p>Feel free to message me with confidence!</p>
-                        <a href="https://www.facebook.com/hunor.berek.7/?locale=hu_HU" target="_blank" class="cta-button">Facebook Profile</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Modal for fullscreen media -->
-    <div id="modal" class="modal">
-        <div class="modal-content">
-            <button class="close-modal" onclick="closeModal()">&times;</button>
-            <div id="modal-media-container"></div>
-        </div>
+      <nav id="primary-menu" class="nav__menu" aria-label="Fő navigáció">
+        <ul class="nav__links">
+          <li><a class="nav__link" href="#home" data-navlink>Főoldal</a></li>
+          <li><a class="nav__link" href="#skills" data-navlink>Készségek</a></li>
+          <li><a class="nav__link" href="#portfolio" data-navlink>Portfólió</a></li>
+          <li><a class="nav__link" href="#contact" data-navlink>Kapcsolat</a></li>
+        </ul>
+      </nav>
     </div>
+  </header>
 
-    <script>
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
+  <main id="main" tabindex="-1">
+    <!-- Hero -->
+    <section id="home" class="hero" aria-labelledby="hero-title">
+      <div class="container">
+        <div class="hero__panel" data-anim="reveal">
+          <h1 id="hero-title" class="hero__title">Berek Hunor</h1>
+          <p class="hero__subtitle">3D grafikus</p>
+          <p class="hero__lead">Kreatív, 16 éves 3D művész termékvizualizáció és reklámanimáció területén, professzionális minőségben.</p>
+          <a class="btn" href="#portfolio">Munkáim megtekintése</a>
+        </div>
+      </div>
+    </section>
 
-        // Modal functionality
-        function openModal(element) {
-            const modal = document.getElementById('modal');
-            const modalContainer = document.getElementById('modal-media-container');
-            
-            // Clear previous content
-            modalContainer.innerHTML = '';
-            
-            if (element.tagName === 'VIDEO') {
-                // Clone the video element
-                const video = element.cloneNode(true);
-                video.className = 'modal-media';
-                video.controls = true;
-                video.autoplay = true;
-                video.removeAttribute('onclick');
-                modalContainer.appendChild(video);
-            } else if (element.tagName === 'IMG') {
-                // Clone the image element
-                const img = element.cloneNode(true);
-                img.className = 'modal-media';
-                img.removeAttribute('onclick');
-                img.removeAttribute('onerror');
-                modalContainer.appendChild(img);
-            }
-            
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden';
+    <!-- Skills -->
+    <section id="skills" class="section" aria-labelledby="skills-title">
+      <div class="container">
+        <h2 id="skills-title" class="section__title">Készségek</h2>
+        <div class="skills__grid" role="list">
+          <article class="card" role="listitem" data-anim="reveal">
+            <div class="card__icon" aria-hidden="true">🚗</div>
+            <h3 class="card__title">Termékvizualizáció</h3>
+            <p class="card__text">Fotorealisztikus render különböző iparágaknak: elektronika, fogyasztási cikkek, stb.</p>
+          </article>
+          <article class="card" role="listitem" data-anim="reveal">
+            <div class="card__icon" aria-hidden="true">🎬</div>
+            <h3 class="card__title">Reklámanimáció</h3>
+            <p class="card__text">Vonzó reklámfilmek, termékdemók és márkavideók készítése közösségi és hirdetési felületekre.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Portfolio -->
+    <section id="portfolio" class="section" aria-labelledby="portfolio-title">
+      <div class="container">
+        <h2 id="portfolio-title" class="section__title">Portfólió</h2>
+
+        <div class="gallery" role="list">
+          <!-- Media item (video) -->
+          <article class="media" role="listitem" data-anim="reveal">
+            <button class="media__frame" data-media-btn aria-label="Nike cipő animáció megnyitása" data-type="video" data-src="video1.mp4" data-poster="poster1.jpg">
+              <video preload="none" muted playsinline aria-hidden="true" poster="poster1.jpg"></video>
+            </button>
+            <div class="media__meta">
+              <h3 class="media__title">Termékbemutató videó</h3>
+              <p class="media__desc">3D animáció és VFX (2025)</p>
+            </div>
+          </article>
+
+          <!-- Media item (video) -->
+          <article class="media" role="listitem" data-anim="reveal">
+            <button class="media__frame" data-media-btn aria-label="Reklámanimáció megnyitása" data-type="video" data-src="video2.mp4" data-poster="poster2.jpg">
+              <video preload="none" muted playsinline aria-hidden="true" poster="poster2.jpg"></video>
+            </button>
+            <div class="media__meta">
+              <h3 class="media__title">Termékbemutató videó</h3>
+              <p class="media__desc">Közösségi platformokra optimalizálva (2025)</p>
+            </div>
+          </article>
+
+          <!-- Media item (image) -->
+          <article class="media" role="listitem" data-anim="reveal">
+            <button class="media__frame" data-media-btn aria-label="Márvány textúra megnyitása" data-type="image" data-src="image1.jpg">
+              <picture>
+                <source type="image/avif" srcset="image1.avif" />
+                <source type="image/webp" srcset="image1.webp" />
+                <img src="image1.jpg" alt="Márvány felületű termék render" loading="lazy" width="800" height="600" />
+              </picture>
+            </button>
+            <div class="media__meta">
+              <h3 class="media__title">Márvány textúra</h3>
+              <p class="media__desc">Önálló munka (2023)</p>
+            </div>
+          </article>
+
+          <!-- Media item (image) -->
+          <article class="media" role="listitem" data-anim="reveal">
+            <button class="media__frame" data-media-btn aria-label="Autóipari komponens megnyitása" data-type="image" data-src="image2.jpg">
+              <picture>
+                <source type="image/avif" srcset="image2.avif" />
+                <source type="image/webp" srcset="image2.webp" />
+                <img src="image2.jpg" alt="Autóipari komponens 3D render" loading="lazy" width="800" height="600" />
+              </picture>
+            </button>
+            <div class="media__meta">
+              <h3 class="media__title">Autóipari render</h3>
+              <p class="media__desc">Önálló munka (2023)</p>
+            </div>
+          </article>
+
+          <!-- Media item (video) -->
+          <article class="media" role="listitem" data-anim="reveal">
+            <button class="media__frame" data-media-btn aria-label="Prémium reklámanimáció megnyitása" data-type="video" data-src="video4.mp4" data-poster="poster4.jpg">
+              <video preload="none" muted playsinline aria-hidden="true" poster="poster4.jpg"></video>
+            </button>
+            <div class="media__meta">
+              <h3 class="media__title">Termékbemutató videó</h3>
+              <p class="media__desc">Prémium minőségű animáció (2025)</p>
+            </div>
+          </article>
+
+          <!-- Media item (image) -->
+          <article class="media" role="listitem" data-anim="reveal">
+            <button class="media__frame" data-media-btn aria-label="Vintage elektronika megnyitása" data-type="image" data-src="image4.jpg">
+              <picture>
+                <source type="image/avif" srcset="image4.avif" />
+                <source type="image/webp" srcset="image4.webp" />
+                <img src="image4.jpg" alt="Vintage stílusú elektronikai termék kompozíció" loading="lazy" width="800" height="600" />
+              </picture>
+            </button>
+            <div class="media__meta">
+              <h3 class="media__title">Vintage stílusú elektronika</h3>
+              <p class="media__desc">Önálló munka (2022)</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="section" aria-labelledby="contact-title">
+      <div class="container">
+        <h2 id="contact-title" class="section__title">Kapcsolat</h2>
+        <div class="card contact__card" data-anim="reveal">
+          <div class="contact__logo" aria-hidden="true">f</div>
+          <h3>Facebook</h3>
+          <p>Írj bátran – válaszolok!</p>
+          <a class="btn" href="https://www.facebook.com/hunor.berek.7/?locale=hu_HU" target="_blank" rel="noopener" aria-label="Facebook profil megnyitása új lapon">Facebook profil</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Accessible media dialog -->
+  <dialog id="mediaDialog" class="media-dialog" aria-label="Média megjelenítő">
+    <div class="media-dialog__wrap">
+      <button class="media-dialog__close" type="button" aria-label="Bezárás">×</button>
+      <div class="media-dialog__content" id="dialogContent"></div>
+    </div>
+  </dialog>
+
+  <script type="module">
+    // Helper: qs/qsa
+    const $ = (sel, root = document) => root.querySelector(sel);
+    const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
+
+    // Mobile menu toggle
+    const menuButton = $('#menuButton');
+    const menu = $('#primary-menu');
+    menuButton?.addEventListener('click', () => {
+      const open = menu.getAttribute('data-open') === 'true';
+      menu.setAttribute('data-open', String(!open));
+      menuButton.setAttribute('aria-expanded', String(!open));
+    });
+
+    // Mark active link on scroll
+    const sections = $$('#home, #skills, #portfolio, #contact');
+    const navLinks = $$('[data-navlink]');
+    const ioNav = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const id = entry.target.id;
+          navLinks.forEach(a => a.toggleAttribute('aria-current', a.getAttribute('href') === `#${id}`));
         }
+      });
+    }, { rootMargin: '-40% 0% -55% 0%' });
+    sections.forEach(s => ioNav.observe(s));
 
-        function closeModal() {
-            const modal = document.getElementById('modal');
-            const modalContainer = document.getElementById('modal-media-container');
-            
-            modal.classList.remove('active');
-            document.body.style.overflow = 'auto';
-            
-            // Stop video if it's playing
-            const video = modalContainer.querySelector('video');
-            if (video) {
-                video.pause();
-            }
+    // Reveal on scroll (reduced-motion safe)
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!prefersReduced) {
+      const revealIO = new IntersectionObserver((entries, obs) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            e.target.animate([
+              { opacity: 0, transform: 'translateY(24px)' },
+              { opacity: 1, transform: 'translateY(0)' }
+            ], { duration: 600, easing: 'cubic-bezier(.2,.6,.2,1)', fill: 'forwards' });
+            obs.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.15 });
+      $$('[data-anim="reveal"]').forEach(el => revealIO.observe(el));
+    }
+
+    // Lazy-init videos inside gallery tiles
+    const videoTiles = $$('[data-media-btn][data-type="video"]');
+    const videoIO = new IntersectionObserver((entries) => {
+      entries.forEach(({ isIntersecting, target }) => {
+        const btn = target; const video = btn.querySelector('video');
+        if (isIntersecting && video && !video.src) {
+          const src = btn.getAttribute('data-src');
+          const poster = btn.getAttribute('data-poster');
+          if (poster) video.setAttribute('poster', poster);
+          const source = document.createElement('source');
+          source.src = src; source.type = 'video/mp4';
+          video.appendChild(source);
         }
+      });
+    }, { rootMargin: '200px 0px' });
+    videoTiles.forEach(t => videoIO.observe(t));
 
-        // Close modal when clicking outside
-        document.getElementById('modal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeModal();
-            }
+    // Dialog (modal) logic with focus management
+    const dialog = /** @type {HTMLDialogElement} */ (document.getElementById('mediaDialog'));
+    const dialogContent = document.getElementById('dialogContent');
+    const closeBtn = dialog.querySelector('.media-dialog__close');
+
+    function openMedia({ type, src, poster }) {
+      dialogContent.innerHTML = '';
+      if (type === 'image') {
+        const img = new Image();
+        img.src = src; img.alt = '';
+        img.loading = 'eager';
+        dialogContent.appendChild(img);
+      } else if (type === 'video') {
+        const v = document.createElement('video');
+        v.controls = true; v.autoplay = true; v.playsInline = true;
+        if (poster) v.poster = poster;
+        const s = document.createElement('source');
+        s.src = src; s.type = 'video/mp4'; v.appendChild(s);
+        dialogContent.appendChild(v);
+      }
+      if (typeof dialog.showModal === 'function') {
+        dialog.showModal();
+      } else {
+        // Fallback for legacy: emulate with open attr
+        dialog.setAttribute('open', '');
+        document.documentElement.style.overflow = 'hidden';
+      }
+      closeBtn.focus();
+    }
+
+    function closeMedia() {
+      dialogContent.innerHTML = '';
+      if (dialog.open && typeof dialog.close === 'function') dialog.close();
+      dialog.removeAttribute('open');
+      document.documentElement.style.overflow = '';
+    }
+
+    closeBtn.addEventListener('click', closeMedia);
+    dialog.addEventListener('close', () => (dialogContent.innerHTML = ''));
+    dialog.addEventListener('click', (e) => {
+      const rect = dialog.getBoundingClientRect();
+      // Click outside content closes
+      if (e.clientX < rect.left || e.clientX > rect.right || e.clientY < rect.top || e.clientY > rect.bottom) {
+        closeMedia();
+      }
+    });
+
+    // Open dialog from gallery cards (keyboard accessible)
+    $$('[data-media-btn]').forEach(btn => {
+      btn.setAttribute('role', 'button');
+      btn.setAttribute('tabindex', '0');
+      btn.addEventListener('click', () => {
+        openMedia({
+          type: btn.getAttribute('data-type'),
+          src: btn.getAttribute('data-src'),
+          poster: btn.getAttribute('data-poster') || ''
         });
+      });
+      btn.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); btn.click(); }
+      });
+    });
 
-        // Close modal with Escape key
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                closeModal();
-            }
-        });
+    // Safer smooth scroll (in case default behavior not supported)
+    $$('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', (e) => {
+        const id = a.getAttribute('href');
+        const target = id && document.querySelector(id);
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
 
-        // Intersection Observer for animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.animationDelay = '0.1s';
-                    entry.target.classList.add('fade-in');
-                }
-            });
-        }, observerOptions);
-
-        // Observe all animated elements
-        document.querySelectorAll('.skill-card, .media-item, .hero-content').forEach(el => {
-            observer.observe(el);
-        });
-
-        // Social media link interaction
-        document.querySelector('.social-card a').addEventListener('click', function(e) {
-            console.log('Facebook profile opened');
-        });
-
-        // Navbar background on scroll
-        window.addEventListener('scroll', function() {
-            const nav = document.querySelector('nav');
-            if (window.scrollY > 50) {
-                nav.style.background = 'rgba(255, 255, 255, 0.25)';
-            } else {
-                nav.style.background = 'rgba(255, 255, 255, 0.15)';
-            }
-        });
-
-        // Parallax effect for hero section
-        window.addEventListener('scroll', function() {
-            const scrolled = window.pageYOffset;
-            const hero = document.querySelector('.hero');
-            if (hero) {
-                hero.style.transform = `translateY(${scrolled * 0.5}px)`;
-            }
-        });
-    </script>
+    // Header transparency tweak on scroll
+    const header = $('.site-header');
+    let lastY = 0;
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY || window.pageYOffset;
+      header.style.background = y > 40
+        ? 'color-mix(in srgb, var(--surface), transparent 70%)'
+        : 'color-mix(in srgb, var(--surface), transparent 80%)';
+      lastY = y;
+    }, { passive: true });
+  </script>
 </body>
 </html>
