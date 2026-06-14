@@ -1,112 +1,828 @@
 <!DOCTYPE html>
 <html lang="hu">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Berek Hunor | 3D Graphics Artist</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:Inter,sans-serif;color:#111;background:#fff;line-height:1.6}
-.container{max-width:1200px;margin:auto;padding:0 24px}
-nav{position:fixed;top:0;width:100%;background:rgba(255,255,255,.92);backdrop-filter:blur(12px);border-bottom:1px solid #eee;z-index:1000}
-.nav-wrap{height:72px;display:flex;justify-content:space-between;align-items:center}
-.logo{font-weight:700}
-.nav-links{display:flex;gap:28px;list-style:none}
-.nav-links a{text-decoration:none;color:#555}
-.hero{padding:180px 0 120px;text-align:center}
-.hero h1{font-size:clamp(3rem,8vw,5.5rem);letter-spacing:-2px}
-.hero h2{color:#666;font-weight:400;margin:16px 0}
-.hero p{max-width:700px;margin:0 auto;color:#666}
-.btn{display:inline-block;margin-top:36px;background:#111;color:#fff;padding:16px 32px;border-radius:14px;text-decoration:none}
-.section{padding:110px 0}
-.title{text-align:center;font-size:3rem;margin-bottom:60px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:30px}
-.card{border:1px solid #eaeaea;border-radius:24px;padding:36px;transition:.3s}
-.card:hover{transform:translateY(-5px);box-shadow:0 20px 40px rgba(0,0,0,.06)}
-.portfolio .card{padding:0;overflow:hidden}
-.media{height:420px;background:#f7f7f7;display:flex;align-items:center;justify-content:center;color:#999}
-.info{padding:24px}
-.contact-card{max-width:500px;margin:auto;text-align:center}
-footer{padding:40px;text-align:center;color:#777;border-top:1px solid #eee}
-@media(max-width:768px){
-.nav-links{display:none}
-.title{font-size:2.2rem}
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Berek Hunor — 3D Graphics Artist</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --white: #ffffff;
+            --off-white: #F7F7F7;
+            --border: #E4E4E4;
+            --text-primary: #111111;
+            --text-secondary: #666666;
+            --text-muted: #999999;
+            --accent: #FF6B35;
+            --accent-hover: #E55A26;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--white);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ── Nav ── */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255,255,255,0.92);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+        }
+
+        nav .inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 32px;
+            height: 64px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1rem;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 36px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            font-weight: 500;
+            letter-spacing: 0.01em;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        /* ── Layout ── */
+        .wrap {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 32px;
+        }
+
+        section {
+            padding: 100px 0;
+        }
+
+        /* ── Hero ── */
+        #home {
+            padding-top: 160px;
+            padding-bottom: 120px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .hero-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 28px;
+        }
+
+        .hero-label::before {
+            content: '';
+            display: block;
+            width: 24px;
+            height: 1.5px;
+            background: var(--accent);
+        }
+
+        .hero h1 {
+            font-size: clamp(2.8rem, 6vw, 5rem);
+            font-weight: 700;
+            line-height: 1.05;
+            letter-spacing: -0.03em;
+            color: var(--text-primary);
+            margin-bottom: 24px;
+        }
+
+        .hero-desc {
+            font-size: 1.125rem;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            max-width: 480px;
+            margin-bottom: 48px;
+            font-weight: 400;
+        }
+
+        .hero-actions {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--text-primary);
+            color: var(--white);
+            padding: 14px 28px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 600;
+            letter-spacing: 0.01em;
+            transition: background 0.2s;
+        }
+
+        .btn-primary:hover {
+            background: #333;
+        }
+
+        .btn-ghost {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .btn-ghost:hover {
+            color: var(--text-primary);
+        }
+
+        .btn-ghost svg {
+            transition: transform 0.2s;
+        }
+
+        .btn-ghost:hover svg {
+            transform: translateX(3px);
+        }
+
+        /* ── Section header ── */
+        .section-eyebrow {
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        .section-title {
+            font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+            font-weight: 700;
+            letter-spacing: -0.025em;
+            line-height: 1.1;
+            color: var(--text-primary);
+            margin-bottom: 60px;
+        }
+
+        /* ── Skills ── */
+        #skills {
+            background: var(--off-white);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1px;
+            background: var(--border);
+            border: 1px solid var(--border);
+        }
+
+        .skill-card {
+            background: var(--white);
+            padding: 48px 40px;
+            transition: background 0.2s;
+        }
+
+        .skill-card:hover {
+            background: #FAFAFA;
+        }
+
+        .skill-number {
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            color: var(--accent);
+            margin-bottom: 24px;
+            display: block;
+        }
+
+        .skill-card h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+            color: var(--text-primary);
+            margin-bottom: 14px;
+        }
+
+        .skill-card p {
+            font-size: 0.925rem;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+
+        /* ── Portfolio ── */
+        #portfolio {
+            border-bottom: 1px solid var(--border);
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .media-item {
+            cursor: pointer;
+        }
+
+        .media-thumb {
+            width: 100%;
+            aspect-ratio: 4/3;
+            background: var(--off-white);
+            border: 1px solid var(--border);
+            overflow: hidden;
+            position: relative;
+            margin-bottom: 16px;
+        }
+
+        .media-thumb::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0);
+            transition: background 0.25s;
+        }
+
+        .media-item:hover .media-thumb::after {
+            background: rgba(0,0,0,0.04);
+        }
+
+        .media-thumb video,
+        .media-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .play-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 44px;
+            height: 44px;
+            background: rgba(255,255,255,0.92);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .media-item:hover .play-icon {
+            opacity: 1;
+        }
+
+        .play-icon svg {
+            color: var(--text-primary);
+        }
+
+        .media-meta {
+            padding: 0 2px;
+        }
+
+        .media-meta .tag {
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 6px;
+            display: block;
+        }
+
+        .media-meta h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .media-meta p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* ── Contact ── */
+        #contact {
+            background: var(--off-white);
+            border-top: 1px solid var(--border);
+        }
+
+        .contact-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: start;
+        }
+
+        .contact-left p {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+        }
+
+        .contact-right {
+            background: var(--white);
+            border: 1px solid var(--border);
+            padding: 40px;
+        }
+
+        .fb-row {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .fb-icon {
+            width: 48px;
+            height: 48px;
+            background: #1877F2;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .fb-icon span {
+            color: white;
+            font-size: 1.4rem;
+            font-weight: 800;
+            line-height: 1;
+        }
+
+        .fb-info h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 2px;
+        }
+
+        .fb-info p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .contact-right > p {
+            font-size: 0.875rem;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            margin-bottom: 28px;
+        }
+
+        .btn-accent {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--accent);
+            color: var(--white);
+            padding: 13px 26px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+
+        .btn-accent:hover {
+            background: var(--accent-hover);
+        }
+
+        /* ── Footer ── */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 32px 0;
+        }
+
+        footer .inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        footer p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* ── Modal ── */
+        .modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.85);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-inner {
+            position: relative;
+            max-width: 90vw;
+            max-height: 90vh;
+        }
+
+        .modal-inner .modal-media {
+            display: block;
+            max-width: 90vw;
+            max-height: 85vh;
+            width: auto;
+            height: auto;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: -14px;
+            right: -14px;
+            width: 36px;
+            height: 36px;
+            background: var(--white);
+            color: var(--text-primary);
+            border: none;
+            border-radius: 50%;
+            font-size: 1.1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            transition: background 0.2s;
+            z-index: 1;
+        }
+
+        .close-modal:hover {
+            background: var(--off-white);
+        }
+
+        /* ── Reveal ── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 900px) {
+            .portfolio-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .contact-layout {
+                grid-template-columns: 1fr;
+                gap: 48px;
+            }
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 640px) {
+            nav .inner, .wrap, footer .inner {
+                padding: 0 20px;
+            }
+            .nav-links { display: none; }
+            section { padding: 72px 0; }
+            #home { padding-top: 120px; }
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+            .skill-card { padding: 32px 24px; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .reveal { opacity: 1; transform: none; }
+        }
+    </style>
 </head>
 <body>
 
-<nav>
-<div class="container nav-wrap">
-<div class="logo">Berek Hunor</div>
-<ul class="nav-links">
-<li><a href="#skills">Készségek</a></li>
-<li><a href="#portfolio">Portfólió</a></li>
-<li><a href="#contact">Kapcsolat</a></li>
-</ul>
-</div>
-</nav>
+    <nav>
+        <div class="inner">
+            <a href="#home" class="logo">Berek Hunor</a>
+            <ul class="nav-links">
+                <li><a href="#home">Főoldal</a></li>
+                <li><a href="#skills">Készségek</a></li>
+                <li><a href="#portfolio">Portfólió</a></li>
+                <li><a href="#contact">Kapcsolat</a></li>
+            </ul>
+        </div>
+    </nav>
 
-<section class="hero">
-<div class="container">
-<h1>Berek Hunor</h1>
-<h2>3D Graphics Artist</h2>
-<p>Kreatív 3D művész, specializációm a termékvizualizáció és reklám animáció. Letisztult, prémium vizuális élmények márkák és termékek számára.</p>
-<a class="btn" href="#portfolio">Portfólió megtekintése</a>
-</div>
-</section>
+    <!-- Hero -->
+    <section id="home">
+        <div class="wrap">
+            <div class="reveal">
+                <span class="hero-label">3D Graphics Artist</span>
+                <h1>Berek Hunor</h1>
+                <p class="hero-desc">17 éves kreatív 3D művész, specializálva termék vizualizációra és reklám animációra. Fotorealisztikus látványból születnek a legjobb márkák.</p>
+                <div class="hero-actions">
+                    <a href="#portfolio" class="btn-primary">Munkáim megtekintése</a>
+                    <a href="#contact" class="btn-ghost">
+                        Kapcsolatfelvétel
+                        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<section id="skills" class="section">
-<div class="container">
-<h2 class="title">Készségek</h2>
-<div class="grid">
-<div class="card">
-<h3>Termék Vizualizáció</h3>
-<p>Fotórealisztikus renderelések elektronikai, fogyasztói és prémium termékek számára.</p>
-</div>
-<div class="card">
-<h3>Reklám Animáció</h3>
-<p>Modern marketing videók, social media kreatívok és termékbemutató animációk.</p>
-</div>
-</div>
-</div>
-</section>
+    <!-- Skills -->
+    <section id="skills">
+        <div class="wrap">
+            <div class="reveal">
+                <p class="section-eyebrow">Szakterületek</p>
+                <h2 class="section-title">Miben vagyok jó</h2>
+            </div>
+            <div class="skills-grid reveal">
+                <div class="skill-card">
+                    <span class="skill-number">01</span>
+                    <h3>Termék Vizualizáció</h3>
+                    <p>Professzionális termék renderelés különböző iparágakhoz. Elektronikai cikkek, termékek és fogyasztási cikkek fotorealisztikus megjelenítése, amely valódi vásárlási döntéseket befolyásol.</p>
+                </div>
+                <div class="skill-card">
+                    <span class="skill-number">02</span>
+                    <h3>Reklám Animáció</h3>
+                    <p>Hangulatos reklám animációk és vizuális élmények készítése. Termék bemutatók, márka videók és marketing tartalmak animálása social media platformokra.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<section id="portfolio" class="section portfolio">
-<div class="container">
-<h2 class="title">Portfólió</h2>
-<div class="grid">
-<div class="card">
-<div class="media">video1.mp4</div>
-<div class="info"><h3>Termék Bemutató Videó</h3><p>3D animáció vizuális látványossággal (2025)</p></div>
-</div>
-<div class="card">
-<div class="media">video2.mp4</div>
-<div class="info"><h3>Social Media Reklám</h3><p>Marketing videók különböző platformokra.</p></div>
-</div>
-<div class="card">
-<div class="media">image1.jpg</div>
-<div class="info"><h3>Márvány Textúra</h3><p>Független munka (2023)</p></div>
-</div>
-</div>
-</div>
-</section>
+    <!-- Portfolio -->
+    <section id="portfolio">
+        <div class="wrap">
+            <div class="reveal">
+                <p class="section-eyebrow">Munkáim</p>
+                <h2 class="section-title">Portfólió</h2>
+            </div>
+            <div class="portfolio-grid">
 
-<section id="contact" class="section">
-<div class="container">
-<h2 class="title">Kapcsolat</h2>
-<div class="card contact-card">
-<h3>Facebook</h3>
-<p>Van egy projekted? Keress bizalommal.</p>
-<a class="btn" href="https://www.facebook.com/hunor.berek.7/?locale=hu_HU" target="_blank">Facebook profil</a>
-</div>
-</div>
-</section>
+                <div class="media-item reveal" onclick="openModal('video', 'video1.mp4')">
+                    <div class="media-thumb">
+                        <video autoplay muted loop playsinline>
+                            <source src="video1.mp4" type="video/mp4">
+                        </video>
+                        <div class="play-icon">
+                            <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                        </div>
+                    </div>
+                    <div class="media-meta">
+                        <span class="tag">Animáció · 2025</span>
+                        <h4>Termék Bemutató Videó</h4>
+                        <p>3D animáció vizuális látványossággal</p>
+                    </div>
+                </div>
 
-<footer>
-© 2026 Berek Hunor
-</footer>
+                <div class="media-item reveal" onclick="openModal('video', 'video2.mp4')">
+                    <div class="media-thumb">
+                        <video autoplay muted loop playsinline>
+                            <source src="video2.mp4" type="video/mp4">
+                        </video>
+                        <div class="play-icon">
+                            <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                        </div>
+                    </div>
+                    <div class="media-meta">
+                        <span class="tag">Social Media · 2025</span>
+                        <h4>Termék Bemutató Videó</h4>
+                        <p>Videók social media platformokra</p>
+                    </div>
+                </div>
 
+                <div class="media-item reveal" onclick="openModal('img', 'image1.jpg')">
+                    <div class="media-thumb">
+                        <img src="image1.jpg" alt="Márvány Textúra" onerror="this.style.background='#f0f0f0'">
+                        <div class="play-icon">
+                            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"/></svg>
+                        </div>
+                    </div>
+                    <div class="media-meta">
+                        <span class="tag">Render · 2023</span>
+                        <h4>Márvány Textúra</h4>
+                        <p>Független munka</p>
+                    </div>
+                </div>
+
+                <div class="media-item reveal" onclick="openModal('img', 'image2.jpg')">
+                    <div class="media-thumb">
+                        <img src="image2.jpg" alt="Márvány Textúra" onerror="this.style.background='#f0f0f0'">
+                        <div class="play-icon">
+                            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"/></svg>
+                        </div>
+                    </div>
+                    <div class="media-meta">
+                        <span class="tag">Render · 2023</span>
+                        <h4>Márvány Textúra</h4>
+                        <p>Független munka</p>
+                    </div>
+                </div>
+
+                <div class="media-item reveal" onclick="openModal('video', 'video4.mp4')">
+                    <div class="media-thumb">
+                        <video autoplay muted loop playsinline>
+                            <source src="video4.mp4" type="video/mp4">
+                        </video>
+                        <div class="play-icon">
+                            <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                        </div>
+                    </div>
+                    <div class="media-meta">
+                        <span class="tag">Animáció · 2025</span>
+                        <h4>Termék Bemutató Videó</h4>
+                        <p>Prémium hatást keltő animációk</p>
+                    </div>
+                </div>
+
+                <div class="media-item reveal" onclick="openModal('img', 'image4.jpg')">
+                    <div class="media-thumb">
+                        <img src="image4.jpg" alt="Régi stílusú Elektronika" onerror="this.style.background='#f0f0f0'">
+                        <div class="play-icon">
+                            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"/></svg>
+                        </div>
+                    </div>
+                    <div class="media-meta">
+                        <span class="tag">Render · 2022</span>
+                        <h4>Régi stílusú Elektronika</h4>
+                        <p>Független munka</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact">
+        <div class="wrap">
+            <div class="contact-layout">
+                <div class="contact-left reveal">
+                    <p class="section-eyebrow">Kapcsolat</p>
+                    <h2 class="section-title">Van egy projekted?</h2>
+                    <p>Ha termék vizualizációra vagy reklám animációra van szükséged, keress meg bizalommal. Szívesen dolgozom együtt új megbízókkal és izgalmas projekteken.</p>
+                    <a href="https://www.facebook.com/hunor.berek.7/?locale=hu_HU" target="_blank" class="btn-accent">
+                        Kapcsolatfelvétel →
+                    </a>
+                </div>
+                <div class="contact-right reveal">
+                    <div class="fb-row">
+                        <div class="fb-icon"><span>f</span></div>
+                        <div class="fb-info">
+                            <h3>Berek Hunor</h3>
+                            <p>Facebook profil</p>
+                        </div>
+                    </div>
+                    <p>Írj bátran — általában 24 órán belül válaszolok. Minden projektet komolyan veszek, legyen szó egy kis termék renderről vagy egy teljes animációs kampányról.</p>
+                    <a href="https://www.facebook.com/hunor.berek.7/?locale=hu_HU" target="_blank" class="btn-accent">Írj Facebookon</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="inner">
+            <p>© 2025 Berek Hunor — 3D Graphics Artist</p>
+            <p>Minden jog fenntartva.</p>
+        </div>
+    </footer>
+
+    <!-- Modal -->
+    <div id="modal" class="modal" onclick="if(event.target===this)closeModal()">
+        <div class="modal-inner">
+            <button class="close-modal" onclick="closeModal()">✕</button>
+            <div id="modal-media-container"></div>
+        </div>
+    </div>
+
+    <script>
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(a => {
+            a.addEventListener('click', e => {
+                const t = document.querySelector(a.getAttribute('href'));
+                if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+            });
+        });
+
+        // Modal
+        function openModal(type, src) {
+            const c = document.getElementById('modal-media-container');
+            c.innerHTML = '';
+            if (type === 'video') {
+                const v = document.createElement('video');
+                v.className = 'modal-media';
+                v.controls = true; v.autoplay = true; v.style.maxWidth = '80vw';
+                const s = document.createElement('source');
+                s.src = src; s.type = 'video/mp4';
+                v.appendChild(s);
+                c.appendChild(v);
+            } else {
+                const img = document.createElement('img');
+                img.className = 'modal-media';
+                img.src = src;
+                c.appendChild(img);
+            }
+            document.getElementById('modal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            const m = document.getElementById('modal');
+            const c = document.getElementById('modal-media-container');
+            const v = c.querySelector('video');
+            if (v) v.pause();
+            m.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+        // Scroll reveal
+        const io = new IntersectionObserver((entries) => {
+            entries.forEach((entry, i) => {
+                if (entry.isIntersecting) {
+                    entry.target.style.transitionDelay = (i * 0.05) + 's';
+                    entry.target.classList.add('visible');
+                    io.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+        document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+        // Navbar scroll
+        window.addEventListener('scroll', () => {
+            document.querySelector('nav').style.borderBottomColor =
+                window.scrollY > 20 ? '#E4E4E4' : '#E4E4E4';
+        });
+    </script>
 </body>
 </html>
