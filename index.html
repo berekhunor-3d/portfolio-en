@@ -257,6 +257,106 @@
             font-weight: 400;
         }
 
+        /* ── Featured Image Banner ── */
+        #featured {
+            padding: 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .featured-banner {
+            position: relative;
+            width: 100%;
+            height: 70vh;
+            min-height: 480px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .featured-banner img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+            transition: transform 0.6s ease;
+        }
+
+        .featured-banner:hover img {
+            transform: scale(1.02);
+        }
+
+        .featured-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                to top,
+                rgba(0,0,0,0.65) 0%,
+                rgba(0,0,0,0.1) 50%,
+                rgba(0,0,0,0) 100%
+            );
+            display: flex;
+            align-items: flex-end;
+            padding: 56px 64px;
+        }
+
+        .featured-meta {
+            color: #fff;
+        }
+
+        .featured-meta .tag {
+            display: inline-block;
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--accent);
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,107,53,0.5);
+            padding: 4px 12px;
+            border-radius: 3px;
+            margin-bottom: 14px;
+        }
+
+        .featured-meta h2 {
+            font-size: clamp(1.8rem, 4vw, 3.2rem);
+            font-weight: 700;
+            letter-spacing: -0.025em;
+            line-height: 1.1;
+            margin-bottom: 10px;
+        }
+
+        .featured-meta p {
+            font-size: 1rem;
+            color: rgba(255,255,255,0.7);
+            font-weight: 400;
+        }
+
+        .featured-zoom-hint {
+            position: absolute;
+            top: 28px;
+            right: 32px;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255,255,255,0.25);
+            color: #fff;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            padding: 8px 16px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            opacity: 0;
+            transition: opacity 0.25s;
+        }
+
+        .featured-banner:hover .featured-zoom-hint {
+            opacity: 1;
+        }
+
         /* ── Portfolio ── */
         #portfolio {
             border-bottom: 1px solid var(--border);
@@ -541,6 +641,9 @@
             .skills-grid {
                 grid-template-columns: 1fr;
             }
+            .featured-overlay {
+                padding: 36px 32px;
+            }
         }
 
         @media (max-width: 640px) {
@@ -554,10 +657,18 @@
                 grid-template-columns: 1fr;
             }
             .skill-card { padding: 32px 24px; }
+            .featured-banner {
+                height: 55vw;
+                min-height: 280px;
+            }
+            .featured-overlay {
+                padding: 24px 20px;
+            }
         }
 
         @media (prefers-reduced-motion: reduce) {
             .reveal { opacity: 1; transform: none; }
+            .featured-banner img { transition: none; }
         }
     </style>
 </head>
@@ -569,6 +680,7 @@
             <ul class="nav-links">
                 <li><a href="#home">Főoldal</a></li>
                 <li><a href="#skills">Készségek</a></li>
+                <li><a href="#featured">Kiemelt</a></li>
                 <li><a href="#portfolio">Portfólió</a></li>
                 <li><a href="#contact">Kapcsolat</a></li>
             </ul>
@@ -613,6 +725,24 @@
                     <h3>Reklám Animáció</h3>
                     <p>Hangulatos reklám animációk és vizuális élmények készítése. Termék bemutatók, márka videók és marketing tartalmak animálása social media platformokra.</p>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured 4K Image -->
+    <section id="featured">
+        <div class="featured-banner reveal" onclick="openModal('img', 'simson.jpg')">
+            <img src="simson.jpg" alt="Simson — 4K Render" loading="lazy">
+            <div class="featured-overlay">
+                <div class="featured-meta">
+                    <span class="tag">Kiemelt Munka · Render · 4K</span>
+                    <h2>Simson</h2>
+                    <p>Fotorealisztikus 4K render — független alkotás</p>
+                </div>
+            </div>
+            <div class="featured-zoom-hint">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"/></svg>
+                Nagyítás
             </div>
         </div>
     </section>
